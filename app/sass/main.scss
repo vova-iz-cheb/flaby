@@ -1,0 +1,246 @@
+@import 'fontello';
+@import 'raleway';
+@import 'robotoslab';
+@import 'bootstrap-reboot.min';
+@import 'bootstrap-grid.min';
+
+$white: #fff;
+$gray1: #494949;
+$gray2: #7c7c7c;
+$gray3: #bebebe;
+$cyan: #66d4f4;
+$blue: #42a8f6;
+$darkblue: #0179D5;
+
+%clear-list {
+	padding-left: 0;
+	margin-top: 0;
+	margin-bottom: 0;
+	list-style: none;
+}
+
+%button {
+	display: inline-block;
+	background-color: transparent;
+	border: 1px solid transparent;
+	vertical-align: middle;
+	text-align: center;
+	text-transform: uppercase;
+	white-space: nowrap;
+    user-select: none;
+    color: $white;
+}
+
+body {
+	font-family: 'Raleway', 'Roboto Slab', sans-serif;
+	color: $gray1;
+}
+
+.bg {
+	height: 936px;
+	@media (max-width: 1599px) {
+		background: url("../img/bg.png") no-repeat center top;
+	}
+	@media (min-width: 1600px) {
+		background: url("../img/Headphones.png") no-repeat left top,
+		url("../img/Pencil 2.png") no-repeat left bottom,
+		url("../img/Pencil 1.png") no-repeat left 92%,
+		url("../img/Earphones.png") no-repeat right 60%,
+		url("../img/phone.png") no-repeat 350px top;
+		background-color: #42a8f6;
+	}
+}
+
+.header {
+	font-weight: 600;
+	border-bottom: 1px solid $white;
+	padding-top: 40px;
+	padding-bottom: 35px;
+	margin-bottom: 250px;
+	@media (max-width: 410px) {
+		margin-bottom: 100px;
+	}
+
+	&__logo {
+		margin: 0;
+		@media (max-width: 410px) {
+			width: 52px;
+			overflow: hidden;
+		}
+	}
+
+	&__login {
+		@extend %button;
+		padding: 14px 31px;
+		border-radius: 10px;
+		font-size: 17px;
+		background-color: rgba(86, 158, 216, 0.8);
+		transition: color 0.3s, background-color 0.3s, box-shadow 0.3s;
+
+		&:hover {
+			color: $blue;
+			background-color: $white;
+		}
+
+		&:focus {
+			box-shadow: 0 0 1px 2px $darkblue;
+		}
+	}
+
+	&__toggler {
+		@extend %button;
+		margin-left: 20px;
+		font-size: 25px;
+		text-decoration: none;
+		width: 40px;
+		height: 40px;
+		text-align: center;
+		border-radius: 4px;
+		line-height: 40px;
+
+		&:hover {
+			background-color: $cyan;
+		}
+
+		&:focus {
+			color: $blue;
+			background-color: $white;
+		}
+
+		@media (min-width: 992px) {
+			display: none;
+		}
+	}
+
+	&__collapsable {
+		max-height: 0;
+		transition: max-height 0.4s;
+	}
+}
+
+.nav {
+	position: absolute;
+	top: 35px;
+	overflow: hidden;
+	width: 100%;
+	background-color: $white;
+
+	@media (min-width: 992px) {
+		position: static;
+		overflow: visible;
+		background-color: transparent;
+	}
+
+	&__wrap {
+		padding-left: 0;
+		padding-right: 0;
+	}
+
+	&__list {
+		@extend %clear-list;
+		display: flex;
+		flex-direction: column;
+
+		@media (min-width: 992px) {
+			flex-direction: row;
+		}
+	}
+
+	&__link {
+		@extend %button;
+		width: 100%;
+		padding: 14px 17px;
+		font-size: 17px;
+		color: $blue;
+		text-align: left;
+		transition: color 0.3s, background-color 0.3s, box-shadow 0.3s;
+
+		&:hover {
+			color: $white;
+			background-color: $cyan;
+		}
+
+		&:focus {
+			color: $white;
+			background-color: $darkblue;
+		}
+
+		@media (min-width: 992px) {
+			color: $white;
+			border-radius: 10px;
+			&:focus {
+				color: $blue;
+				background-color: $white;
+				box-shadow: 0 0 1px 2px $blue;
+			}
+		}
+
+
+	}
+}
+
+.descr {
+	color: $white;
+	font-weight: 600;
+	max-width: 540px;
+
+	&__header {
+		font-size: 40px;
+		margin-bottom: 16px;
+	}
+
+	&__text {
+		font-size: 26px;
+		font-weight: 500;
+		margin-bottom: 65px;
+	}
+
+	&__btn {
+		@extend %button;
+		padding: 24px 10px;
+		border-radius: 10px;
+		font-size: 20px;
+		text-transform: capitalize;
+		background-color: rgba(86, 158, 216, 0.8);
+		transition: color 0.3s, background-color 0.3s, box-shadow 0.3s;
+		width: 240px;
+		height: 80px;
+		margin-bottom: 1rem;
+
+		&:hover {
+			color: $blue;
+			background-color: $white;
+		}
+
+		&:focus {
+			box-shadow: 0 0 1px 2px $darkblue;
+		}
+	}
+
+	&__btn_google {
+		color: $gray1;
+		background-color: $white;
+		margin-right: 25px;
+
+		&:hover {
+			color: $gray1;
+			box-shadow: 0 0 40px 3px $gray3;
+		}
+
+		&:focus {
+			box-shadow: 0 0 2px 2px $gray2;
+		}
+
+		span {
+			vertical-align: top;
+		}
+	}
+
+	&__icon {
+		display: inline-block;
+		width: 30px;
+		height: 32px;
+		margin-right: 16px;
+		background-image: url("../img/google_play.png");
+	}
+}
