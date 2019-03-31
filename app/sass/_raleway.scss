@@ -25,3 +25,23 @@
     font-weight: 600;
     font-style: normal;
 }
+
+@font-face {
+    font-family: 'Raleway';
+    src: local('Raleway Bold'), local('Raleway-Bold'), 
+    url('../fonts/raleway/ralewaybold.woff2') format('woff2'), 
+    url('../fonts/raleway/ralewaybold.woff') format('woff'), 
+    url('../fonts/raleway/ralewaybold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Raleway';
+    src: local('Raleway ExtraBold'), local('Raleway-ExtraBold'), 
+    url('../fonts/raleway/ralewayextrabold.woff2') format('woff2'), 
+    url('../fonts/raleway/ralewayextrabold.woff') format('woff'), 
+    url('../fonts/raleway/ralewayextrabold.ttf') format('truetype');
+    font-weight: 800;
+    font-style: normal;
+}

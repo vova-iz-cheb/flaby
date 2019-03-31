@@ -1,4 +1,4 @@
-const { task, src, dest, watch, parallel } = require('gulp'), // Подключаем Gulp
+const { task, src, dest, watch, series, parallel } = require('gulp'), // Подключаем Gulp
         sass         = require('gulp-sass'), //Подключаем Sass пакет,
         browserSync  = require('browser-sync'), // Подключаем Browser Sync
         concat       = require('gulp-concat'), // Подключаем gulp-concat (для конкатенации файлов)
@@ -18,13 +18,6 @@ task('sass', function() {
         .pipe(dest('app/css'))
 });
 
-// task("sass", function() {
-//     return src('app/sass/*.+(scss|sass)') // источник 
-//       .pipe(sass()) // конвертируем scss -> css
-//       .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true }))
-//       .pipe(dest('app/css')) // переносим в новую папку
-// });
-
 task("browser-sync", function() {
     browserSync.init({
         server: {
@@ -34,23 +27,22 @@ task("browser-sync", function() {
     });
 });
 
+task('scripts', function() {
+    return src([
+        'app/js/jquery-1.11.0.min.js',
+        'app/js/myscript.js'
+        ])
+        .pipe(concat('script.min.js'))
+        .pipe(uglify())
+        .pipe(dest('app/js'))
+});
 
-// gulp.task('scripts', function() {
-//     return gulp.src([ // Берем все необходимые библиотеки
-//         'app/libs/jquery/dist/jquery.min.js', // Берем jQuery
-//         'app/libs/magnific-popup/dist/jquery.magnific-popup.min.js' // Берем Magnific Popup
-//         ])
-//         .pipe(concat('libs.min.js')) // Собираем их в кучу в новом файле libs.min.js
-//         .pipe(uglify()) // Сжимаем JS файл
-//         .pipe(gulp.dest('app/js')); // Выгружаем в папку app/js
-// });
-
-// gulp.task('css-libs', function() {
-//     return gulp.src('app/css/libs.css') // Выбираем файл для минификации
-//         .pipe(cssnano()) // Сжимаем
-//         .pipe(rename({suffix: '.min'})) // Добавляем суффикс .min
-//         .pipe(gulp.dest('app/css')); // Выгружаем в папку app/css
-// });
+task('cssnano', function() {
+    return src('app/css/main.css')
+        .pipe(cssnano())
+        .pipe(rename({suffix: '.min'}))
+        .pipe(dest('app/css'))
+});
 
 // gulp.task('clean', async function() {
 //     return del.sync('dist'); // Удаляем папку dist перед сборкой
@@ -92,11 +84,12 @@ task("browser-sync", function() {
 // })
 
 task('watch', function() {
-    watch('app/sass/**/*.scss', parallel('sass'));
+    watch('app/sass/**/*.scss', series('sass', 'cssnano'));
+    watch('app/js/myscript.js', parallel('scripts'));
     watch('app/*.html').on('change', browserSync.reload);
-    watch('app/css/*.css').on('change', browserSync.reload);
-    // watch(['app/js/common.js', 'app/libs/**/*.js'], gulp.parallel('scripts')); // Наблюдение за главным JS файлом и за библиотеками
+    watch('app/css/main.min.css').on('change', browserSync.reload);
+    watch('app/js/script.min.js').on('change', browserSync.reload);
 });
-task('default', parallel('sass', 'browser-sync', 'watch'));
-// task('default', parallel('css-libs', 'sass', 'scripts', 'browser-sync', 'watch'));
+task('default', parallel('scripts', 'sass', 'cssnano', 'browser-sync', 'watch'));
+
 // task('build', gulp.parallel('prebuild', 'clean', 'img', 'sass', 'scripts'));
