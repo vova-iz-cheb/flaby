@@ -44,44 +44,39 @@ task('cssnano', function() {
         .pipe(dest('app/css'))
 });
 
-// gulp.task('clean', async function() {
-//     return del.sync('dist'); // Удаляем папку dist перед сборкой
-// });
+task('clean', function() {
+    return del('dist')
+});
 
-// gulp.task('img', function() {
-//     return gulp.src('app/img/**/*') // Берем все изображения из app
-//         .pipe(cache(imagemin({ // С кешированием
-//         // .pipe(imagemin({ // Сжимаем изображения без кеширования
-//             interlaced: true,
-//             progressive: true,
-//             svgoPlugins: [{removeViewBox: false}],
-//             use: [pngquant()]
-//         }))/**/)
-//         .pipe(gulp.dest('dist/img')); // Выгружаем на продакшен
-// });
+task('prebuild', function() {
+    src('app/css/main.min.css')
+    .pipe(dest('dist/css'))
 
-// gulp.task('prebuild', async function() {
+    src('app/fonts/**/*')
+    .pipe(dest('dist/fonts'))
 
-//     var buildCss = gulp.src([ // Переносим библиотеки в продакшен
-//         'app/css/main.css',
-//         'app/css/libs.min.css'
-//         ])
-//     .pipe(gulp.dest('dist/css'))
+    src('app/js/script.min.js')
+    .pipe(dest('dist/js'))
 
-//     var buildFonts = gulp.src('app/fonts/**/*') // Переносим шрифты в продакшен
-//     .pipe(gulp.dest('dist/fonts'))
+    return src('app/*.html')
+    .pipe(dest('dist'))
+});
 
-//     var buildJs = gulp.src('app/js/**/*') // Переносим скрипты в продакшен
-//     .pipe(gulp.dest('dist/js'))
+task('img', function() {
+    return src('app/img/**/*')
+        .pipe(cache(imagemin({
+        // .pipe(imagemin({ // Сжимаем изображения без кеширования
+            interlaced: true,
+            progressive: true,
+            svgoPlugins: [{removeViewBox: false}],
+            use: [pngquant()],
+        }))/**/)
+        .pipe(dest('dist/img'))
+});
 
-//     var buildHtml = gulp.src('app/*.html') // Переносим HTML в продакшен
-//     .pipe(gulp.dest('dist'));
-
-// });
-
-// gulp.task('clear', function (callback) {
-//     return cache.clearAll();
-// })
+task('clearCache', function (callback) {
+    return cache.clearAll();
+})
 
 task('watch', function() {
     watch('app/sass/**/*.scss', series('sass', 'cssnano'));
@@ -90,6 +85,6 @@ task('watch', function() {
     watch('app/css/main.min.css').on('change', browserSync.reload);
     watch('app/js/script.min.js').on('change', browserSync.reload);
 });
-task('default', parallel('scripts', 'sass', 'cssnano', 'browser-sync', 'watch'));
 
-// task('build', gulp.parallel('prebuild', 'clean', 'img', 'sass', 'scripts'));
+task('default', parallel('scripts', 'sass', 'cssnano', 'browser-sync', 'watch'));
+task('build', series('clean', 'prebuild', 'img'));

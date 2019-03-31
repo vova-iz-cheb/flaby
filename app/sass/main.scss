@@ -79,6 +79,7 @@ body {
 
 .bg4 {
 	min-height: 1000px;
+	margin-bottom: 25px;
 	padding-top: 40px;
 	padding-bottom: 50px;
 
@@ -456,7 +457,7 @@ body {
 	width: 100%;
 	max-width: 730px;
 	height: 351px;
-	border: 1px solid $white;
+	border: 1px solid transition;
 	border-radius: 10px;
 	background-color: #fff;
 	box-shadow: 0px 0px 51px 0px rgba(0, 0, 0, 0.08);
@@ -735,5 +736,143 @@ body {
 	}
 }
 
+%input {
+	display: block;
+	width: 370px;
+	height: 75px;
+	border-radius: 37.5px;
+	text-align: center;
+	user-select: none;
+	white-space: nowrap;
+	outline: none;
 
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 25px;
+	@media(max-width: 410px) {
+		width: 100%;
+	}
+}
 
+.form-subscribe {
+	padding-bottom: 60px;
+
+	&__input {
+		@extend %input;
+		border: 1px solid rgba(92, 149, 161, 0.07);
+		background-color: #f5fafa;
+		transition: background-color 0.3s, box-shadow 0.3s;
+
+		font-size: 14px;
+		font-weight: 700;
+		color: $gray1;
+
+		&::placeholder {
+			color: $gray3;
+		}
+
+		&:focus {
+			background-color: #fff;
+			box-shadow: 0px 8px 32px 1px rgba(92, 149, 161, 0.07);
+		}
+
+	}
+
+	&__submit {
+		@extend %input;
+		font-size: 16px;
+		font-weight: 700;
+	}
+}
+
+.copy {
+	color: $gray2;
+	font-size: 14px;
+	font-weight: 500;
+	padding: 36px 0;
+	p {margin:3px;}
+	
+	div:not(:last-child) {
+		@media(min-width: 768px) {
+			border-right: 1px solid $gray2;
+		}	
+	}
+
+}
+
+.links {
+	border-bottom: 1px solid $gray3;
+	border-top: 1px solid $gray3;
+	padding-top: 45px;
+	padding-bottom: 30px;
+
+	&__column {
+		@media(max-width: 575px) {
+			text-align: center;
+		}
+	}
+
+	&__header {
+		font-size: 20px;
+		font-weight: 700;
+		margin-bottom: 35px;
+	}
+
+	ul {
+		@extend %clear-list;
+		margin-bottom: 40px;
+	}
+
+	&__item {
+		font-size: 14px;
+		font-weight: 500;
+		color: $gray2;
+		line-height: 28px;
+	}
+}
+
+%social {
+	display: inline-block;
+	width: 30px;
+	height: 30px;
+	border-radius: 50%;
+	text-align: center;
+	color: #fff;
+	line-height: 30px;
+	font-size: 14px;
+	margin-right: 6px;
+}
+.social {
+	margin-bottom: 50px;
+	max-width: 210px;
+	@media(max-width: 575px) {
+		margin: 0 auto 50px;
+		text-align: center;
+	}
+
+	&__img {
+		padding-bottom: 10px;
+	}
+
+	&__text {
+		font-size: 14px;
+		font-weight: 500;
+		color: $gray2;
+		line-height: 28px;
+	}
+
+	&__f {
+		@extend %social;
+		background-color: #3b579d;
+	}
+
+	&__g {
+		@extend %social;
+		background-color: #da4835;
+	}
+
+	&__t {
+		@extend %social;
+		background-color: #55acee;
+	}
+}
